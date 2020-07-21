@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PknuWPF", "PknuWPF\PknuWPF.csproj", "{4A596C79-76F4-46D9-9045-349D8F482468}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A596C79-76F4-46D9-9045-349D8F482468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A596C79-76F4-46D9-9045-349D8F482468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A596C79-76F4-46D9-9045-349D8F482468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A596C79-76F4-46D9-9045-349D8F482468}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02401F54-2463-4334-AE84-55EA0CF6E107}
+	EndGlobalSection
+EndGlobal
