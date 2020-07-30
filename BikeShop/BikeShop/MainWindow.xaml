@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BikeShop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow">
+    <Grid Loaded="Grid_Loaded">
+
+        <Frame x:Name="MainFrame" Source="/BikeShop;component/Menu.xaml" NavigationUIVisibility="Visible" />
     </Grid>
 </Window>
