@@ -24,5 +24,24 @@ namespace ThirdCaliburnApp.Helpers
             "   Destination = @Destination " +
             "      WHERE id = @id ";
 
+        internal static readonly string INSERT_EMPLYEE =
+            "INSERT INTO emplyeestbl " +
+            "( " +
+            "            EmpName, " +
+            "            salary, " +
+            "            DeptName, " +
+            "            Destination " +
+            "         ) " +
+            "VALUES " +
+            " ( " +
+            "           @EmpName, " +
+            "           @salary, " +
+            "           @DeptName, " +
+            "           @Destination " +
+            ") ";
+        internal static readonly string DELETE_EMPLYEE =
+                            "DELETE FROM emplyeestbl " +
+                            "WHERE id = @id ";
+
     }
 }

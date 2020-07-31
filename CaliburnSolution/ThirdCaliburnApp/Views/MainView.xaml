@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThirdCaliburnApp.Views"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:iconpack="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:iconPacks="using:MahApps.Metro.IconPacks"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainView" Height="720" Width="1280"
@@ -40,7 +40,9 @@
                 materialDesign:ButtonAssist.CornerRadius="5"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 ToolTip="직원리스트 호출" Content="Get Lists"/>
+
         </Grid>
+        
         <!--Start of GridTitle-->
         <Grid x:Name="SelectedEmployee" Grid.Column="1" Margin="60">
             <Grid.RowDefinitions>
@@ -103,12 +105,16 @@
                         HorizontalAlignment="Center">
                 <Button x:Name="NewEmployee" Width="100" Height="50"
                         materialDesign:ButtonAssist.CornerRadius="10"
-                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         ToolTip="신규" Content="New" Margin="5,0"/>
                 <Button x:Name="SaveEmployee" Width="100" Height="50"
                         materialDesign:ButtonAssist.CornerRadius="10"
                         Style="{StaticResource MaterialDesignRaisedButton}"
                         ToolTip="저장" Content="Save" Margin="5,0"/>
+                <Button x:Name="DeleteEmployee"  Width="100" Height="50"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        ToolTip="삭제" Content="Delete" Margin="5,0"/>
                 
             </StackPanel>
         </Grid>

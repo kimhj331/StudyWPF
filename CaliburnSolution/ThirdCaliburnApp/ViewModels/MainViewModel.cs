@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Microsoft.Xaml.Behaviors.Media;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Windows;
 using ThirdCaliburnApp.Helpers;
 using ThirdCaliburnApp.Models;
@@ -26,6 +28,7 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 employees = value;
                 NotifyOfPropertyChange(() => Employees);
+                NotifyOfPropertyChange(() => CanSaveEmployee);
             } 
         }
 
@@ -47,7 +50,8 @@ namespace ThirdCaliburnApp.ViewModels
                 Destination = value.Destination;
                 
                 NotifyOfPropertyChange(() => SelectedEmployee);
-                
+                NotifyOfPropertyChange(() => CanSaveEmployee);
+
             }
         }
 
@@ -60,6 +64,8 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 id = value;
                 NotifyOfPropertyChange(() => Id);
+                NotifyOfPropertyChange(() => CanSaveEmployee);
+                NotifyOfPropertyChange(() => CanDeleteEmployee);
             }
         }
 
@@ -72,6 +78,7 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 empName = value;
                 NotifyOfPropertyChange(() => EmpName);
+                NotifyOfPropertyChange(() => CanSaveEmployee);
             }
         }
 
@@ -83,6 +90,7 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 salary = value;
                 NotifyOfPropertyChange(() => Salary);
+                NotifyOfPropertyChange(() => CanSaveEmployee);
             }
         }
 
@@ -94,6 +102,7 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 deptName = value;
                 NotifyOfPropertyChange(() => DeptName);
+                NotifyOfPropertyChange(() => CanSaveEmployee);
             }
         }
 
@@ -105,6 +114,7 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 destination = value;
                 NotifyOfPropertyChange(() => Destination);
+                NotifyOfPropertyChange(() => CanSaveEmployee);
             }
         }
         #endregion
@@ -148,7 +158,14 @@ namespace ThirdCaliburnApp.ViewModels
             using (MySqlConnection conn = new MySqlConnection(Commons.CONNSTRING))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(Commons.UPDATE_EMPLYEE, conn);
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                if (Id == 0)//Insert
+                    cmd.CommandText = Commons.INSERT_EMPLYEE;
+                else
+                    cmd.CommandText = Commons.UPDATE_EMPLYEE;
+
+                
                 MySqlParameter paramEmpName = new MySqlParameter("@EmpName", MySqlDbType.VarChar, 45);
                 paramEmpName.Value = EmpName;
                 cmd.Parameters.Add(paramEmpName);
@@ -165,9 +182,12 @@ namespace ThirdCaliburnApp.ViewModels
                 paramDestination.Value = Destination;
                 cmd.Parameters.Add(paramDestination);
 
-                MySqlParameter paramId = new MySqlParameter("@id", MySqlDbType.Int32);
-                paramId.Value = Id;
-                cmd.Parameters.Add(paramId);
+                if (Id != 0)
+                {
+                    MySqlParameter paramId = new MySqlParameter("@id", MySqlDbType.Int32);
+                    paramId.Value = Id;
+                    cmd.Parameters.Add(paramId);
+                }
 
                 resultRow = cmd.ExecuteNonQuery();
             }
@@ -176,20 +196,52 @@ namespace ThirdCaliburnApp.ViewModels
             {
                 MessageBox.Show("저장되었습니다");
                 GetEmployees();
+                NewEmployee();
             }
         }
         public bool CanSaveEmployee
         {
-            get 
-            {
-                return !((Id == 0) && (string.IsNullOrEmpty(EmpName) && (Salary == 0) &&
-                    string.IsNullOrEmpty(DeptName) && string.IsNullOrEmpty(Destination)));
-            } 
+            get => !(string.IsNullOrEmpty(EmpName) ||
+                    string.IsNullOrEmpty(DeptName) ||
+                    string.IsNullOrEmpty(Destination) ||
+                    Salary == 0);
         }
-
         public void NewEmployee()
-        { 
-            
+        {
+            Id = 0;
+            EmpName = string.Empty;
+            DeptName = string.Empty;
+            Destination = string.Empty;
+            Salary = 0;
+        }
+        public bool CanDeleteEmployee
+        {
+            get => !(Id == 0);
+        }
+        public void DeleteEmployee()
+        {
+            int resultRow = 0;
+            using (MySqlConnection conn = new MySqlConnection(Commons.CONNSTRING))
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.Connection = conn;
+
+                cmd.CommandText = Commons.DELETE_EMPLYEE;
+
+                MySqlParameter paramId = new MySqlParameter("@id", MySqlDbType.Int32);
+                paramId.Value = Id;
+                cmd.Parameters.Add(paramId);
+
+                resultRow = cmd.ExecuteNonQuery();
+            }
+            if (resultRow > 0)
+            {
+                MessageBox.Show("삭제되었습니다");
+                GetEmployees();
+                NewEmployee();
+            }
         }
     }
 }
